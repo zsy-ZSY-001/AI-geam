@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空侵略者 - AIgeam</title>
+    <style>
+        :root {
+            --primary-color: #00b894;
+            --secondary-color: #0984e3;
+            --background-color: #1e272e;
+            --player-color: #55efc4;
+            --enemy-color: #ff7675;
+            --bullet-color: #74b9ff;
+            --text-color: #ffffff;
+            --shield-color: #a8e6cf;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .game-header {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            color: var(--primary-color);
+        }
+
+        .info-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 4/3;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            display: none;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .control-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .shoot-btn {
+            background: var(--primary-color);
+            width: 80px;
+            height: 80px;
+        }
+
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .game-over p {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .restart-button {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .restart-button:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .wave-info {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        @keyframes starfield {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(100%);
+            }
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield"></div>
+    
+    <div class="game-header">
+        <div class="game-info">
+            <div class="info-item">
+                <span class="info-label">得分</span>
+                <span class="info-value" id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">生命值</span>
+                <span class="info-value" id="lives">3</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">最高分</span>
+                <span class="info-value" id="highScore">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">波数</span>
+                <span class="info-value" id="wave">1</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div class="wave-info" id="waveInfo"></div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="leftBtn">←</button>
+        <button class="control-btn shoot-btn" id="shootBtn">发射</button>
+        <button class="control-btn" id="rightBtn">→</button>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h2 id="gameOverTitle">游戏结束</h2>
+        <p id="gameOverMessage">得分: <span id="finalScore">0</span></p>
+        <button class="restart-button" onclick="restartGame()">重新开始</button>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html> 

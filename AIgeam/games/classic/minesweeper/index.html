@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷 - AIgeam</title>
+    <style>
+        :root {
+            --primary-color: #00cec9;
+            --secondary-color: #e94560;
+            --background-color: #1a1a2e;
+            --grid-color: #16213e;
+            --cell-color: #2d3436;
+            --text-color: #ffffff;
+            --mine-color: #ff4757;
+            --flag-color: #ffa502;
+            --revealed-color: #2f3542;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-header {
+            background: var(--grid-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            color: var(--primary-color);
+        }
+
+        .info-value {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .difficulty-btn {
+            background: var(--cell-color);
+            color: var(--text-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary-color);
+        }
+
+        .difficulty-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .game-container {
+            background: var(--grid-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-board {
+            display: grid;
+            gap: 4px;
+            padding: 10px;
+            background: var(--cell-color);
+            border-radius: 10px;
+        }
+
+        .cell {
+            width: 35px;
+            height: 35px;
+            background: var(--grid-color);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .cell:hover {
+            transform: scale(0.95);
+        }
+
+        .cell.revealed {
+            background: var(--revealed-color);
+        }
+
+        .cell.mine {
+            background: var(--mine-color);
+        }
+
+        .cell.flagged {
+            background: var(--flag-color);
+        }
+
+        .cell[data-number="1"] { color: #3498db; }
+        .cell[data-number="2"] { color: #2ecc71; }
+        .cell[data-number="3"] { color: #e74c3c; }
+        .cell[data-number="4"] { color: #9b59b6; }
+        .cell[data-number="5"] { color: #f1c40f; }
+        .cell[data-number="6"] { color: #1abc9c; }
+        .cell[data-number="7"] { color: #34495e; }
+        .cell[data-number="8"] { color: #7f8c8d; }
+
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .game-over p {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .restart-button {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .restart-button:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .game-header {
+                padding: 15px;
+            }
+
+            .cell {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+
+            .difficulty-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cell {
+                width: 25px;
+                height: 25px;
+                font-size: 0.9em;
+            }
+
+            .game-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .difficulty-selector {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header">
+        <div class="game-info">
+            <div class="info-item">
+                <span class="info-label">剩余地雷</span>
+                <span class="info-value" id="mines-left">10</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">用时</span>
+                <span class="info-value" id="timer">0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">最佳成绩</span>
+                <span class="info-value" id="best-time">-</span>
+            </div>
+        </div>
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" data-difficulty="easy">简单</button>
+            <button class="difficulty-btn" data-difficulty="medium">中等</button>
+            <button class="difficulty-btn" data-difficulty="hard">困难</button>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-board" id="board"></div>
+    </div>
+
+    <div class="game-over" id="game-over">
+        <h2 id="game-over-title">游戏结束</h2>
+        <p id="game-over-message">用时: <span id="final-time">0</span> 秒</p>
+        <button class="restart-button" onclick="restartGame()">重新开始</button>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html> 

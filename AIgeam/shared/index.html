@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIgeam 游戏中心</title>
+    <style>
+        :root {
+            --primary-color: #00cec9;
+            --secondary-color: #e94560;
+            --background-color: #1a1a2e;
+            --card-color: #16213e;
+            --text-color: #ffffff;
+            --category-color: #2d3436;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--card-color);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .category {
+            margin-bottom: 3rem;
+            background: var(--category-color);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .category-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .game-card {
+            background: var(--card-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .game-info {
+            padding: 1.2rem;
+        }
+
+        .game-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-description {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .game-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .play-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .play-button:hover {
+            background: var(--secondary-color);
+        }
+
+        footer {
+            background: var(--card-color);
+            padding: 1rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .category {
+                padding: 1rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AIgeam 游戏中心</h1>
+        <p class="subtitle">精选休闲游戏集合</p>
+    </header>
+
+    <main>
+        <!-- 经典游戏 -->
+        <section class="category">
+            <h2 class="category-title">经典游戏</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="assets/tetris.jpg" alt="俄罗斯方块" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">俄罗斯方块</h3>
+                        <p class="game-description">经典方块消除游戏，考验空间思维和反应能力。</p>
+                        <div class="game-tags">
+                            <span class="tag">经典</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="tetris/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/minesweeper.jpg" alt="扫雷" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">扫雷</h3>
+                        <p class="game-description">经典逻辑推理游戏，考验细心和分析能力。</p>
+                        <div class="game-tags">
+                            <span class="tag">益智</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="minesweeper/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/breakout.jpg" alt="打砖块" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">打砖块</h3>
+                        <p class="game-description">经典弹球游戏，考验手眼协调能力。</p>
+                        <div class="game-tags">
+                            <span class="tag">动作</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="breakout/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/flappybird.jpg" alt="Flappy Bird" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">Flappy Bird</h3>
+                        <p class="game-description">简单但富有挑战性的点击游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">休闲</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="flappybird/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/spaceinvaders.jpg" alt="太空侵略者" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">太空侵略者</h3>
+                        <p class="game-description">经典射击游戏，对抗外星入侵者。</p>
+                        <div class="game-tags">
+                            <span class="tag">射击</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="spaceinvaders/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 益智类 -->
+        <section class="category">
+            <h2 class="category-title">益智游戏</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="assets/mahjong.jpg" alt="连连看" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">连连看</h3>
+                        <p class="game-description">经典图案配对游戏，考验记忆力。</p>
+                        <div class="game-tags">
+                            <span class="tag">益智</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="mahjong/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/sokoban.jpg" alt="推箱子" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">推箱子</h3>
+                        <p class="game-description">经典解谜游戏，考验空间规划能力。</p>
+                        <div class="game-tags">
+                            <span class="tag">益智</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="sokoban/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/klotski.jpg" alt="华容道" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">华容道</h3>
+                        <p class="game-description">古老的滑块谜题，考验逻辑思维。</p>
+                        <div class="game-tags">
+                            <span class="tag">益智</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="klotski/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/jigsaw.jpg" alt="拼图" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">拼图游戏</h3>
+                        <p class="game-description">经典拼图游戏，还原完整图片。</p>
+                        <div class="game-tags">
+                            <span class="tag">益智</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="jigsaw/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 多人/联机类 -->
+        <section class="category">
+            <h2 class="category-title">多人游戏</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="assets/gomoku.jpg" alt="五子棋" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">五子棋</h3>
+                        <p class="game-description">经典棋类游戏，支持双人对战。</p>
+                        <div class="game-tags">
+                            <span class="tag">策略</span>
+                            <span class="tag">双人</span>
+                        </div>
+                        <a href="gomoku/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/tictactoe.jpg" alt="井字棋" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">井字棋</h3>
+                        <p class="game-description">简单有趣的策略游戏，支持AI对战。</p>
+                        <div class="game-tags">
+                            <span class="tag">策略</span>
+                            <span class="tag">双人</span>
+                        </div>
+                        <a href="tictactoe/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/slitherio.jpg" alt="贪吃蛇大作战" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">贪吃蛇大作战</h3>
+                        <p class="game-description">多人在线贪吃蛇游戏，竞技对抗。</p>
+                        <div class="game-tags">
+                            <span class="tag">动作</span>
+                            <span class="tag">多人</span>
+                        </div>
+                        <a href="slitherio/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/pong.jpg" alt="弹球对战" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">弹球对战</h3>
+                        <p class="game-description">经典双人乒乓球游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">运动</span>
+                            <span class="tag">双人</span>
+                        </div>
+                        <a href="pong/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 现代流行 -->
+        <section class="category">
+            <h2 class="category-title">现代游戏</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="assets/tower.jpg" alt="塔防游戏" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">塔防游戏</h3>
+                        <p class="game-description">策略性塔防游戏，建造防御阵线。</p>
+                        <div class="game-tags">
+                            <span class="tag">策略</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="tower/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/candy.jpg" alt="消消乐" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">消消乐</h3>
+                        <p class="game-description">经典三消游戏，简单但富有挑战性。</p>
+                        <div class="game-tags">
+                            <span class="tag">休闲</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="candy/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/jump.jpg" alt="跳一跳" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">跳一跳</h3>
+                        <p class="game-description">考验时机的跳跃游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">休闲</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="jump/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/bubble.jpg" alt="泡泡龙" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">泡泡龙</h3>
+                        <p class="game-description">经典泡泡消除游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">休闲</span>
+                            <span class="tag">单人</span>
+                        </div>
+                        <a href="bubble/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 创新实验性 -->
+        <section class="category">
+            <h2 class="category-title">创新游戏</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <img src="assets/procmaze.jpg" alt="程序生成迷宫" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">程序生成迷宫</h3>
+                        <p class="game-description">无限随机生成的迷宫探索。</p>
+                        <div class="game-tags">
+                            <span class="tag">探索</span>
+                            <span class="tag">创新</span>
+                        </div>
+                        <a href="procmaze/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/tankai.jpg" alt="AI对战坦克" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">AI对战坦克</h3>
+                        <p class="game-description">与智能AI进行坦克对战。</p>
+                        <div class="game-tags">
+                            <span class="tag">AI</span>
+                            <span class="tag">对战</span>
+                        </div>
+                        <a href="tankai/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/sandbox.jpg" alt="物理沙盒" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">物理沙盒</h3>
+                        <p class="game-description">自由创造的物理实验场。</p>
+                        <div class="game-tags">
+                            <span class="tag">创造</span>
+                            <span class="tag">物理</span>
+                        </div>
+                        <a href="sandbox/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/textadv.jpg" alt="文字冒险" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">文字冒险</h3>
+                        <p class="game-description">沉浸式文字冒险游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">RPG</span>
+                            <span class="tag">剧情</span>
+                        </div>
+                        <a href="textadv/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="assets/rhythm.jpg" alt="音乐节奏" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">音乐节奏</h3>
+                        <p class="game-description">跟随音乐节奏的动作游戏。</p>
+                        <div class="game-tags">
+                            <span class="tag">音乐</span>
+                            <span class="tag">节奏</span>
+                        </div>
+                        <a href="rhythm/index.html" class="play-button">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AIgeam 游戏中心 版权所有</p>
+    </footer>
+
+    <script>
+        // 注册Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker 注册成功:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker 注册失败:', error);
+                    });
+            });
+        }
+
+        // 游戏卡片3D效果
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'none';
+            });
+        });
+
+        // 图片加载错误处理
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function() {
+                this.src = 'assets/default.jpg';
+            };
+        });
+    </script>
+</body>
+</html> 

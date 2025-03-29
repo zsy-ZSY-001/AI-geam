@@ -1,0 +1,20 @@
+groups:
+- name: game_alerts
+  rules:
+  - alert: HighGameErrorRate
+    expr: rate(game_errors_total[5m]) > 0.1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High game error rate detected"
+      description: "The error rate for game operations is above 0.1 (current value: {{ $value }})"
+
+  - alert: LowGameActivity
+    expr: rate(game_plays_total[1h]) < 1
+    for: 1h
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low game activity detected"
+      description: "The game activity rate is below 1 play per hour (current value: {{ $value }})" 

@@ -1,0 +1,224 @@
+.game-2048-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.game-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.game-header h1 {
+  color: #776e65;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.score-container {
+  display: flex;
+  gap: 10px;
+}
+
+.score-box {
+  background-color: #bbada0;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.new-game-button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-game-button:hover {
+  background-color: #9f8b77;
+}
+
+.game-description {
+  margin-bottom: 20px;
+  color: #776e65;
+  text-align: center;
+}
+
+.board {
+  background-color: #bbada0;
+  border-radius: 6px;
+  padding: 15px;
+  position: relative;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.cell {
+  width: 80px;
+  height: 80px;
+  margin-right: 15px;
+  background-color: #cdc1b4;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #776e65;
+  transition: all 0.1s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cell:last-child {
+  margin-right: 0;
+}
+
+.cell-0 {
+  color: transparent;
+}
+
+.cell-2, .cell-4 {
+  color: #776e65;
+}
+
+.cell-8, .cell-16, .cell-32, .cell-64, .cell-128, .cell-256, .cell-512, .cell-1024, .cell-2048 {
+  color: #f9f6f2;
+}
+
+.cell-2 { background-color: #eee4da; }
+.cell-4 { background-color: #ede0c8; }
+.cell-8 { background-color: #f2b179; }
+.cell-16 { background-color: #f59563; }
+.cell-32 { background-color: #f67c5f; }
+.cell-64 { background-color: #f65e3b; }
+.cell-128 { background-color: #edcf72; }
+.cell-256 { background-color: #edcc61; }
+.cell-512 { background-color: #edc850; }
+.cell-1024 { background-color: #edc53f; }
+.cell-2048 { background-color: #edc22e; }
+
+.game-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(238, 228, 218, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 6px;
+  z-index: 10;
+}
+
+.win-message, .game-over-message {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #776e65;
+  margin-bottom: 20px;
+}
+
+.win-message {
+  color: #f9f6f2;
+  background-color: rgba(237, 194, 46, 0.5);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.try-again-button {
+  background-color: #8f7a66;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.try-again-button:hover {
+  background-color: #9f8b77;
+}
+
+.game-instructions {
+  color: #776e65;
+  margin-top: 20px;
+  background-color: #f5f3f0;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.game-instructions h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #d8d4d0;
+  padding-bottom: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 500px) {
+  .game-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cell {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .game-header h1 {
+    font-size: 2rem;
+  }
+  
+  .score-box {
+    min-width: 70px;
+  }
+  
+  .score-value {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .cell {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+    font-size: 1.2rem;
+  }
+} 

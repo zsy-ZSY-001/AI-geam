@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俄罗斯方块 - AIgeam</title>
+    <style>
+        :root {
+            --primary-color: #00cec9;
+            --secondary-color: #e94560;
+            --background-color: #1a1a2e;
+            --grid-color: #16213e;
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #game-board {
+            border: 2px solid var(--primary-color);
+            background: var(--grid-color);
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(20, 30px);
+            gap: 1px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+            transition: background-color 0.2s;
+        }
+
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 200px;
+        }
+
+        .next-piece {
+            background: var(--grid-color);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .score-board {
+            background: var(--grid-color);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .controls {
+            background: var(--grid-color);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .score {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+        }
+
+        .control-key {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .restart-button {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+
+        .restart-button:hover {
+            background: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+            }
+
+            #game-board {
+                grid-template-columns: repeat(10, 25px);
+                grid-template-rows: repeat(20, 25px);
+            }
+
+            .cell {
+                width: 25px;
+                height: 25px;
+            }
+
+            .info-panel {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div id="game-board"></div>
+        <div class="info-panel">
+            <div class="next-piece">
+                <h2>下一个方块</h2>
+                <div id="next-piece-display"></div>
+            </div>
+            <div class="score-board">
+                <h2>分数</h2>
+                <div class="score" id="score">0</div>
+                <h2>等级</h2>
+                <div class="score" id="level">1</div>
+                <h2>消除行数</h2>
+                <div class="score" id="lines">0</div>
+            </div>
+            <div class="controls">
+                <h2>操作说明</h2>
+                <p><span class="control-key">←</span> <span class="control-key">→</span> 移动</p>
+                <p><span class="control-key">↑</span> 旋转</p>
+                <p><span class="control-key">↓</span> 加速下落</p>
+                <p><span class="control-key">空格</span> 直接下落</p>
+                <p><span class="control-key">P</span> 暂停</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="game-over">
+        <h2>游戏结束</h2>
+        <p>最终得分: <span id="final-score">0</span></p>
+        <button class="restart-button" onclick="restartGame()">重新开始</button>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html> 
